@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
+    "start": "node index.js",
+    "product_test": "node schemas/product_test.js"
   },
   "author": "Omar Magdy",
   "license": "MIT",
