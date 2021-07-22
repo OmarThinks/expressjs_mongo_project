@@ -3,7 +3,6 @@ const mongoose = require('mongoose');
 const {productSchema} = require("./product.js");
 
 
-
 mongoose.connect(
 	'mongodb://localhost:27017/cantiin', 
 	{useNewUrlParser: true, useUnifiedTopology: true});
@@ -22,16 +21,5 @@ const Product = mongoose.model('Product', productSchema);
 
 
 
-const p1 = new Product({
-	"name":"Labtop",
-	"description":
-	"This labtop is for sale.",
-	"price":5
-});
 
-
-
-
-p1.save(function (err, p1) {
-if (err) return console.error(err);
-});
+module.exports={Product};
