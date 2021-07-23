@@ -63,6 +63,24 @@ app.post('/products', function(req, res) {
 
 
 
+app.get('/products/:id', function(req, res) {
+	let product_id = req.params.id;
+	
+	Product.findById(product_id, function (err, product) {
+		if (err) 
+		{
+			res.statusCode = 404;
+			res.send(mongoose_errors_to_json(err));
+		}
+		else
+		{
+			console.log(product);
+			res.send(product);
+		}
+	});
+});
+
+
 /*
 
 
