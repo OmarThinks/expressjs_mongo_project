@@ -70,7 +70,7 @@ app.get('/products/:id', function(req, res) {
 		if (err) 
 		{
 			res.statusCode = 404;
-			res.send(mongoose_errors_to_json(err));
+			res.send({"_id":"there is no product with this _id"});
 		}
 		else
 		{
