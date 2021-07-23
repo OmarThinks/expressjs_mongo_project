@@ -12,14 +12,25 @@ const {Product} = require("./schemas/_db.js");
 
 function mongoose_errors_to_json(raised_err)
 {
+	console.log(raised_err);
+	console.log(JSON.stringify(raised_err));
 	let errors = raised_err.errors;
+	console.log(errors);
 	
 	let errors_json = {};
 	for (const err in errors) {
   		errors_json[err] = errors[err].message;
 	}
-	return errors_json;
+
+	if (Reflect.ownKeys(errors_json).length!=0) {return errors_json;}
+	return {"success":false,"message":raised_err["message"]}
+	
 }
+
+
+
+
+
 
 /*Ping*/
 
@@ -44,7 +55,6 @@ app.get('/products', function(req, res) {
 });
 
 /*Product: Create*/
-
 app.post('/products', function(req, res) {
 	
 	const p1 = new Product(req.body);
@@ -94,6 +104,12 @@ app.get('/products/:id', function(req, res) {
 
 
 
+
+
+
+
+
+
 /*Product: Delete*/
 app.delete('/products/:id', function(req, res) {
 	let product_id = req.params.id;
@@ -120,6 +136,53 @@ app.delete('/products/:id', function(req, res) {
 		}
 	});
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*Product: Update*/
+app.put('/products/:id', function(req, res) {
+	let product_id = req.params.id;
+
+	Product.findByIdAndUpdate(product_id, req.body, 
+		{"useFindAndModify":false, "new":true,
+
+		"runValidators": true},function (err, p) 
+	{
+		if (err) 
+		{
+			res.statusCode = 400;
+			res.send(mongoose_errors_to_json(err));
+		}
+		else
+		{
+			if (p)
+			{res.send(p);}
+			else
+			{
+				res.statusCode = 404;
+				res.send({"_id":"there is no product with this _id"});
+			}			
+		}
+	});
+});
+
+
+
 
 
 
@@ -230,6 +293,17 @@ app.delete('/products/:id', function(req, res) {
 */
 
 
+
+
+/*
+{"stringValue":"\"60fa57b72d712q2ec8d192ef\"",
+"valueType":"string",
+"kind":"ObjectId",
+"value":"60fa57b72d712q2ec8d192ef",
+"path":"_id","reason":{},
+"name":"CastError",
+"message":"Cast to ObjectId failed for value \"60fa57b72d712q2ec8d192ef\" (type string) at path \"_id\" for model \"Product\""}
+*/
 
 
  
