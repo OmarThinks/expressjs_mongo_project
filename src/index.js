@@ -21,6 +21,7 @@ function mongoose_errors_to_json(raised_err)
 	return errors_json;
 }
 
+/*Ping*/
 
 app.get('/', function (req, res) {
   res.send('Hello World')
@@ -28,6 +29,7 @@ app.get('/', function (req, res) {
 
 
 
+/*Product: List*/
 
 app.get('/products', function(req, res) {
   Product.find({}, function(err, products) {
@@ -41,6 +43,7 @@ app.get('/products', function(req, res) {
   });
 });
 
+/*Product: Create*/
 
 app.post('/products', function(req, res) {
 	
@@ -62,7 +65,7 @@ app.post('/products', function(req, res) {
 
 
 
-
+/*Product: Details*/
 app.get('/products/:id', function(req, res) {
 	let product_id = req.params.id;
 	
@@ -79,6 +82,68 @@ app.get('/products/:id', function(req, res) {
 		}
 	});
 });
+
+
+
+
+/*Product: Delete*/
+app.get('/products/:id', function(req, res) {
+	let product_id = req.params.id;
+	let product;
+	Product.findById(product_id, function (err, p) {
+		if (err) 
+		{
+			res.statusCode = 404;
+			res.send({"_id":"there is no product with this _id"});
+		}
+	});
+	
+	Product.findOneAndDelete(product_id, function (err, p) {
+		if (err) 
+		{
+			res.statusCode = 422;
+			res.send({"_id":"thsi product can not be deleted"});
+		}
+		else{
+			res.send({"success":true,
+				"message":"product deleted successfully"});
+		}
+	});
+
+
+});
+
+
+
+
+
+
+
+
+/*Product: Update*/
+app.get('/products/:id', function(req, res) {
+	let product_id = req.params.id;
+	
+	Product.findById(product_id, function (err, product) {
+		if (err) 
+		{
+			res.statusCode = 404;
+			res.send({"_id":"there is no product with this _id"});
+		}
+		else
+		{
+			console.log(product);
+			res.send(product);
+		}
+	});
+});
+
+
+
+
+
+
+
 
 
 /*
