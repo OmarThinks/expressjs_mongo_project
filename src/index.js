@@ -56,7 +56,7 @@ app.post('/products', function(req, res) {
 	}
 	else
 	{
-		console.log(p1);
+		//console.log(p1);
 		res.send(p1);
 	}
 	});
@@ -77,8 +77,16 @@ app.get('/products/:id', function(req, res) {
 		}
 		else
 		{
-			console.log(product);
-			res.send(product);
+			if (product)
+			{
+				//console.log(product);
+				res.send(product);
+			}
+			else
+			{
+				res.statusCode = 404;
+				res.send({"_id":"there is no product with this _id"});
+			}	
 		}
 	});
 });
@@ -87,30 +95,30 @@ app.get('/products/:id', function(req, res) {
 
 
 /*Product: Delete*/
-app.get('/products/:id', function(req, res) {
+app.delete('/products/:id', function(req, res) {
 	let product_id = req.params.id;
 	let product;
-	Product.findById(product_id, function (err, p) {
+	//console.log("I search this id");
+
+	Product.findByIdAndDelete(product_id, function (err, p) {
 		if (err) 
 		{
 			res.statusCode = 404;
 			res.send({"_id":"there is no product with this _id"});
+			//console.log("I did not find this id");
 		}
-	});
-	
-	Product.findOneAndDelete(product_id, function (err, p) {
-		if (err) 
+		else
 		{
-			res.statusCode = 422;
-			res.send({"_id":"thsi product can not be deleted"});
-		}
-		else{
-			res.send({"success":true,
-				"message":"product deleted successfully"});
+			if (p)
+			{res.send({"success":true,
+				"message":"product deleted successfully"});}
+			else
+			{
+				res.statusCode = 404;
+				res.send({"_id":"there is no product with this _id"});
+			}			
 		}
 	});
-
-
 });
 
 
@@ -121,7 +129,8 @@ app.get('/products/:id', function(req, res) {
 
 
 /*Product: Update*/
-app.get('/products/:id', function(req, res) {
+
+/*app.get('/products/:id', function(req, res) {
 	let product_id = req.params.id;
 	
 	Product.findById(product_id, function (err, product) {
@@ -138,7 +147,7 @@ app.get('/products/:id', function(req, res) {
 	});
 });
 
-
+*/
 
 
 
