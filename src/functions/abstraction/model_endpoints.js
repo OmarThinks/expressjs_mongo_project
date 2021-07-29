@@ -20,4 +20,20 @@ function listEndPoint(model)
 
 
 
+
+
+
+
+
+function createEndPoint(model){
+	function endpointToReturn(req,res)
+	{
+		
+	}
+}
+
+
+
+
+
 module.exports={listEndPoint};

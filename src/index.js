@@ -2,10 +2,14 @@ const express = require('express');
 const app = express();
 
 app.use(express.json());
+/*Importing Error Handlers*/
+const {mongoose_errors_to_json} = 
+	require("./functions/error_handlers/error_to_json.js");
+
 
 /*Importing Abstractions*/
-
-const {listEndPoint} = require("./functions/abstraction/model_endpoints.js");
+const {listEndPoint} = 
+	require("./functions/abstraction/model_endpoints.js");
 
 
 /*Importing Models*/
@@ -13,7 +17,7 @@ const {Product} = require("./schemas/_db.js");
 
 
 
-
+/*
 
 
 function mongoose_errors_to_json(raised_err)
@@ -34,7 +38,7 @@ function mongoose_errors_to_json(raised_err)
 }
 
 
-
+*/
 
 
 
@@ -48,33 +52,7 @@ app.get('/', function (req, res) {
 
 /*Product: List*/
 
-app.get('/products', function(req, res) {
-  Product.find({}, function(err, products) {
-    var productMap = {};
-
-    products.forEach(function(product) {
-      productMap[product._id] = product;
-    });
-
-    res.send(productMap);  
-  });
-});
-
-
-
-
-app.get('/productss', listEndPoint(Product));
-
-
-
-
-
-
-
-
-
-
-
+app.get('/products', listEndPoint(Product));
 
 
 /*Product: Create*/
