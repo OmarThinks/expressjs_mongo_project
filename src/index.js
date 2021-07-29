@@ -8,7 +8,7 @@ const {mongoose_errors_to_json} =
 
 
 /*Importing Abstractions*/
-const {listEndPoint, createEndPoint} = 
+const {listEndPoint, createEndPoint, detailsEndPoint} = 
 	require("./functions/abstraction/model_endpoints.js");
 
 
@@ -87,7 +87,10 @@ app.post('/products', createEndPoint(Product));
 
 
 /*Product: Details*/
-app.get('/products/:id', function(req, res) {
+
+app.get('/products/:id', detailsEndPoint(Product, "product"))
+
+/*app.get('/products/:id', function(req, res) {
 	let product_id = req.params.id;
 	
 	Product.findById(product_id, function (err, product) {
@@ -111,7 +114,7 @@ app.get('/products/:id', function(req, res) {
 		}
 	});
 });
-
+*/
 
 
 
