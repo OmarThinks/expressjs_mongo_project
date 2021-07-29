@@ -21,83 +21,6 @@ const {Product} = require("./schemas/_db.js");
 /*
 
 
-function mongoose_errors_to_json(raised_err)
-{
-	console.log(raised_err);
-	console.log(JSON.stringify(raised_err));
-	let errors = raised_err.errors;
-	console.log(errors);
-	
-	let errors_json = {};
-	for (const err in errors) {
-  		errors_json[err] = errors[err].message;
-	}
-
-	if (Reflect.ownKeys(errors_json).length!=0) {return errors_json;}
-	return {"success":false,"message":raised_err["message"]}
-	
-}
-
-
-
-
-
-
-app.post('/products', function(req, res) {
-	
-	const p1 = new Product(req.body);
-	
-	p1.save(function (err, p1) {
-	if (err) {
-		res.statusCode = 400;
-		res.send(mongoose_errors_to_json(err));
-	}
-	else
-	{
-		//console.log(p1);
-		res.send(p1);
-	}
-	});
-
-});
-
-
-
-
-
-
-
-
-
-app.get('/products/:id', function(req, res) {
-	let product_id = req.params.id;
-	
-	Product.findById(product_id, function (err, product) {
-		if (err) 
-		{
-			res.statusCode = 404;
-			res.send({"_id":"there is no product with this _id"});
-		}
-		else
-		{
-			if (product)
-			{
-				//console.log(product);
-				res.send(product);
-			}
-			else
-			{
-				res.statusCode = 404;
-				res.send({"_id":"there is no product with this _id"});
-			}	
-		}
-	});
-});
-
-
-
-
-
 */
 
 
@@ -131,51 +54,20 @@ app.get('/products/:id', detailsEndPoint(Product, "product"));
 
 
 
+/*Product: Update*/
 
 app.put('/products/:id', updateEndPoint(Product, "product"));
 
 
-/*Product: Update*/
-/*app.put('/products/:id', function(req, res) {
-	let product_id = req.params.id;
-
-	Product.findByIdAndUpdate(product_id, req.body, 
-		{"useFindAndModify":false, "new":true,
-
-		"runValidators": true},function (err, p) 
-	{
-		if (err) 
-		{
-			res.statusCode = 400;
-			res.send(mongoose_errors_to_json(err));
-		}
-		else
-		{
-			if (p)
-			{res.send(p);}
-			else
-			{
-				res.statusCode = 404;
-				res.send({"_id":"there is no product with this _id"});
-			}			
-		}
-	});
-});
-
-*/
 
 
 
 
 
-
-
-
-
-
+app.delete('/products/:id', deleteEndPoint(Product,"product"));
 
 /*Product: Delete*/
-app.delete('/products/:id', function(req, res) {
+/*app.delete('/products/:id', function(req, res) {
 	let product_id = req.params.id;
 	let product;
 	//console.log("I search this id");
@@ -201,7 +93,7 @@ app.delete('/products/:id', function(req, res) {
 	});
 });
 
-
+*/
 
 
 

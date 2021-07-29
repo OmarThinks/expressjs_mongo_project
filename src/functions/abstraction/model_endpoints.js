@@ -116,9 +116,34 @@ function updateEndPoint(model, model_name){
 	return endPointToReturn;
 }
 
-function deleteEndPoint(model){
+function deleteEndPoint(model, model_name){
 	function endPointToReturn (req,res){
 
+
+	let doc_id = req.params.id;
+	//console.log("I search this id");
+
+	model.findByIdAndDelete(doc_id, function (err, doc) {
+		if (err) 
+		{
+			res.statusCode = 404;
+			res.send({"_id":"there is no "+model_name+
+				" with this _id"});
+			//console.log("I did not find this id");
+		}
+		else
+		{
+			if (doc)
+			{res.send({"success":true,
+				"message":model_name +" deleted successfully"});}
+			else
+			{
+				res.statusCode = 404;
+				res.send({"_id":"there is no "+ model_name+
+					" with this _id"});
+			}			
+		}
+	});
 	}
 	return endPointToReturn;
 }
