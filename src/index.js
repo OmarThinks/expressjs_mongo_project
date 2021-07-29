@@ -1,6 +1,12 @@
 const express = require('express');
 const app = express();
+
 app.use(express.json());
+
+/*Importing Abstractions*/
+
+const {listEndPoint} = require("./functions/abstraction/model_endpoints.js");
+
 
 /*Importing Models*/
 const {Product} = require("./schemas/_db.js");
@@ -53,6 +59,23 @@ app.get('/products', function(req, res) {
     res.send(productMap);  
   });
 });
+
+
+
+
+app.get('/productss', listEndPoint(Product));
+
+
+
+
+
+
+
+
+
+
+
+
 
 /*Product: Create*/
 app.post('/products', function(req, res) {

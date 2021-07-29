@@ -17,3 +17,7 @@ function listEndPoint(model)
 
 	return endPointToReturn;
 }
+
+
+
+module.exports={listEndPoint};
