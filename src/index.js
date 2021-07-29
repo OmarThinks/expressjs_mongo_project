@@ -8,7 +8,7 @@ const {mongoose_errors_to_json} =
 
 
 /*Importing Abstractions*/
-const {listEndPoint} = 
+const {listEndPoint, createEndPoint} = 
 	require("./functions/abstraction/model_endpoints.js");
 
 
@@ -38,6 +38,32 @@ function mongoose_errors_to_json(raised_err)
 }
 
 
+
+
+
+
+app.post('/products', function(req, res) {
+	
+	const p1 = new Product(req.body);
+	
+	p1.save(function (err, p1) {
+	if (err) {
+		res.statusCode = 400;
+		res.send(mongoose_errors_to_json(err));
+	}
+	else
+	{
+		//console.log(p1);
+		res.send(p1);
+	}
+	});
+
+});
+
+
+
+
+
 */
 
 
@@ -56,23 +82,7 @@ app.get('/products', listEndPoint(Product));
 
 
 /*Product: Create*/
-app.post('/products', function(req, res) {
-	
-	const p1 = new Product(req.body);
-	
-	p1.save(function (err, p1) {
-	if (err) {
-		res.statusCode = 400;
-		res.send(mongoose_errors_to_json(err));
-	}
-	else
-	{
-		//console.log(p1);
-		res.send(p1);
-	}
-	});
-
-});
+app.post('/products', createEndPoint(Product));
 
 
 
