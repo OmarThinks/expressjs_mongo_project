@@ -74,21 +74,23 @@ They will be displayed as JSON.
 <img src="images/list.gif">
 
 
-## 3) (GET) http://127.0.0.1:3000/products/<id>
-This endpoint will display the product with this id.
 
 
-
-## 4) (POST) http://127.0.0.1:3000/products/
+## 3) (POST) http://127.0.0.1:3000/products/
 This endpoint will add a new product.
 
 
 
-## 5) (DELETE) http://127.0.0.1:3000/products/<id>
+## 4) (GET) http://127.0.0.1:3000/products/:id
+This endpoint will display the product with this id.
+
+
+
+## 5) (DELETE) http://127.0.0.1:3000/products/:id
 To delete the product with this ID.
 
 
-## 6) (PUT) http://127.0.0.1:3000/products/<id>
+## 6) (PUT) http://127.0.0.1:3000/products/:id
 To update the product with this ID.
 
 
