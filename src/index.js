@@ -8,7 +8,8 @@ const {mongoose_errors_to_json} =
 
 
 /*Importing Abstractions*/
-const {listEndPoint, createEndPoint, detailsEndPoint} = 
+const {listEndPoint, createEndPoint, 
+	detailsEndPoint, updateEndPoint, deleteEndPoint} = 
 	require("./functions/abstraction/model_endpoints.js");
 
 
@@ -64,6 +65,39 @@ app.post('/products', function(req, res) {
 
 
 
+
+
+
+
+app.get('/products/:id', function(req, res) {
+	let product_id = req.params.id;
+	
+	Product.findById(product_id, function (err, product) {
+		if (err) 
+		{
+			res.statusCode = 404;
+			res.send({"_id":"there is no product with this _id"});
+		}
+		else
+		{
+			if (product)
+			{
+				//console.log(product);
+				res.send(product);
+			}
+			else
+			{
+				res.statusCode = 404;
+				res.send({"_id":"there is no product with this _id"});
+			}	
+		}
+	});
+});
+
+
+
+
+
 */
 
 
@@ -88,33 +122,49 @@ app.post('/products', createEndPoint(Product));
 
 /*Product: Details*/
 
-app.get('/products/:id', detailsEndPoint(Product, "product"))
+app.get('/products/:id', detailsEndPoint(Product, "product"));
 
-/*app.get('/products/:id', function(req, res) {
+
+
+
+
+
+
+
+
+app.put('/products/:id', updateEndPoint(Product, "product"));
+
+
+/*Product: Update*/
+/*app.put('/products/:id', function(req, res) {
 	let product_id = req.params.id;
-	
-	Product.findById(product_id, function (err, product) {
+
+	Product.findByIdAndUpdate(product_id, req.body, 
+		{"useFindAndModify":false, "new":true,
+
+		"runValidators": true},function (err, p) 
+	{
 		if (err) 
 		{
-			res.statusCode = 404;
-			res.send({"_id":"there is no product with this _id"});
+			res.statusCode = 400;
+			res.send(mongoose_errors_to_json(err));
 		}
 		else
 		{
-			if (product)
-			{
-				//console.log(product);
-				res.send(product);
-			}
+			if (p)
+			{res.send(p);}
 			else
 			{
 				res.statusCode = 404;
 				res.send({"_id":"there is no product with this _id"});
-			}	
+			}			
 		}
 	});
 });
+
 */
+
+
 
 
 
@@ -162,38 +212,6 @@ app.delete('/products/:id', function(req, res) {
 
 
 
-
-
-
-
-
-
-/*Product: Update*/
-app.put('/products/:id', function(req, res) {
-	let product_id = req.params.id;
-
-	Product.findByIdAndUpdate(product_id, req.body, 
-		{"useFindAndModify":false, "new":true,
-
-		"runValidators": true},function (err, p) 
-	{
-		if (err) 
-		{
-			res.statusCode = 400;
-			res.send(mongoose_errors_to_json(err));
-		}
-		else
-		{
-			if (p)
-			{res.send(p);}
-			else
-			{
-				res.statusCode = 404;
-				res.send({"_id":"there is no product with this _id"});
-			}			
-		}
-	});
-});
 
 
 

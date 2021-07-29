@@ -86,9 +86,32 @@ function detailsEndPoint(model, model_name){
 	return endPointToReturn;
 }
 
-function updateEndPoint(model){
+function updateEndPoint(model, model_name){
 	function endPointToReturn (req,res){
 
+		let doc_id = req.params.id;
+
+		model.findByIdAndUpdate(doc_id, req.body, 
+			{"useFindAndModify":false, "new":true,
+			"runValidators": true},function (err, doc) 
+		{
+			if (err) 
+			{
+				res.statusCode = 400;
+				res.send(mongoose_errors_to_json(err));
+			}
+			else
+			{
+				if (doc)
+				{res.send(doc);}
+				else
+				{
+					res.statusCode = 404;
+					res.send({"_id":"there is no "+model_name+
+						" with this _id"});
+				}			
+			}
+		});
 	}
 	return endPointToReturn;
 }
@@ -104,4 +127,5 @@ function deleteEndPoint(model){
 
 
 
-module.exports={listEndPoint, createEndPoint, detailsEndPoint};
+module.exports={listEndPoint, createEndPoint, 
+	detailsEndPoint, updateEndPoint, deleteEndPoint};
