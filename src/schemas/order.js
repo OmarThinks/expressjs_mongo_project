@@ -4,23 +4,47 @@ const {Product} = require("./product.js");
 
 const {validateObjectIdExists} =  require("../functions/validators.js");
 
-async function product_id_validator (val) {
-  	console.log(val);
-	validateObjectIdExists(Product, val).
-	then((doc)=>{
-		if (doc) {
-			//console.log(doc);
-			return true;
-		}else{
-			//console.log(false);
-			return false;
-		}
-	});
+function foreingKeyValidator(model){
+	return async function id_validator (val) {
+	  	console.log(val);
+		doc = await validateObjectIdExists(model, val);
+		if (doc) {console.log(doc);
+				return true;}
+		else{console.log(false);
+				return false;}
+		/*await validateObjectIdExists(model, val).
+		then((doc)=>{
+			if (doc) {
+				console.log(doc);
+				return true;
+			}else{
+				console.log(false);
+				return false;
+			}
+		});*/
+	}
+}
+
+
+async function myFunction(val){
+	async function myInnerFunction(){
+		let x = await 7;
+		return false;
+	}
+	return await myInnerFunction;
 }
 
 
 
+function myFunction2 (v) {
+    return async function (val) {
+       return await false;
+    }
+}
 
+
+
+//console.log(await foreingKeyValidator(Product)("60fa57b72d712b2ec8d192ef"));
 
 
 const orderSchema = new mongoose.Schema(
@@ -29,7 +53,7 @@ const orderSchema = new mongoose.Schema(
 		"type":mongoose.ObjectId,
 		"required":true,
 		"immutable":true,
-		"validate":product_id_validator
+		"validate": foreingKeyValidator(Product)
 	}, 
 	amount: { 
 		type: Number,
