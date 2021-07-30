@@ -32,12 +32,6 @@ function listEndPoint(model)
 
 
 
-
-
-
-
-
-
 function createEndPoint(model){
 	async function endPointToReturn(req,res)
 	{
@@ -57,25 +51,6 @@ function createEndPoint(model){
 	}
 	return endPointToReturn;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -106,7 +81,7 @@ function updateEndPoint(model){
 	async function endPointToReturn (req,res){
 		let document_id = req.params.id;
 		let modelName = model.$__collection.modelName;
-		await model.findByIdAndUpdate(document_id, req.body, 
+		model.findByIdAndUpdate(document_id, req.body, 
 			{"useFindAndModify":false, "new":true,
 			"runValidators": true},function (err, doc) 
 			{
@@ -128,50 +103,9 @@ function updateEndPoint(model){
 				}
 			});
 	}
-
-/*		let document_id = req.params.id;
-		let modelName = model.$__collection.modelName;
-		doc = await validateObjectIdExists(model, document_id);
-		if (doc){
-			
-			await doc.update(req.body,{"runValidators": true})
-			.then(()=>{res.send(doc);})
-			.catch((err)=>{
-				res.statusCode = 422;
-				res.send(mongoose_errors_to_json(err));
-			});
-			//await doc.save();
-			
-		}
-		else{
-			res.statusCode = 404;
-			res.send({"_id":"there is no "+modelName+" with this _id"});
-		}
-	}*/
-		/*model.findByIdAndUpdate(doc_id, req.body, 
-			{"useFindAndModify":false, "new":true,
-			"runValidators": true},function (err, doc) 
-		{
-			if (err) 
-			{
-				res.statusCode = 400;
-				res.send(mongoose_errors_to_json(err));
-			}
-			else
-			{
-				if (doc)
-				{res.send(doc);}
-				else
-				{
-					res.statusCode = 404;
-					res.send({"_id":"there is no "+model_name+
-						" with this _id"});
-				}			
-			}
-		});
-	}*/
 	return endPointToReturn;
 }
+
 
 function deleteEndPoint(model){
 	async function endPointToReturn (req,res){
@@ -187,36 +121,9 @@ function deleteEndPoint(model){
 			res.statusCode = 404;
 			res.send({"_id":"there is no "+modelName+" with this _id"});
 		}
-
-	/*let doc_id = req.params.id;
-	//console.log("I search this id");
-
-	model.findByIdAndDelete(doc_id, function (err, doc) {
-		if (err) 
-		{
-			res.statusCode = 404;
-			res.send({"_id":"there is no "+model_name+
-				" with this _id"});
-			//console.log("I did not find this id");
-		}
-		else
-		{
-			if (doc)
-			{res.send({"success":true,
-				"message":model_name +" deleted successfully"});}
-			else
-			{
-				res.statusCode = 404;
-				res.send({"_id":"there is no "+ model_name+
-					" with this _id"});
-			}			
-		}
-	});*/
 	}
 	return endPointToReturn;
 }
-
-
 
 
 
