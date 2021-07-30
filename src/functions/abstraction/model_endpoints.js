@@ -1,6 +1,9 @@
 const {mongoose_errors_to_json} = 
 	require("../error_handlers/error_to_json.js");
 
+const {validateObjectIdExists} = 
+	require("../validators.js");
+
 
 
 
@@ -57,31 +60,16 @@ function createEndPoint(model){
 
 
 
-function detailsEndPoint(model, model_name){
+function detailsEndPoint(model){
 	function endPointToReturn (req,res){
-
-	let document_id = req.params.id;
-	
-	model.findById(document_id, function (err, doc) {
-		if (err) 
-		{
+		let document_id = req.params.id;
+		let modelName = model.$__collection.modelName;
+		doc = validateObjectIdExists(model, document_id);
+		if (doc){res.send(doc);}
+		else{
 			res.statusCode = 404;
-			res.send({"_id":"there is no "+model_name+" with this _id"});
+			res.send({"_id":"there is no "+modelName+" with this _id"});
 		}
-		else
-		{
-			if (doc)
-			{
-				//console.log(doc);
-				res.send(doc);
-			}
-			else
-			{
-				res.statusCode = 404;
-				res.send({"_id":"there is no "+model_name+" with this _id"});
-			}	
-		}
-	});
 	}
 	return endPointToReturn;
 }
