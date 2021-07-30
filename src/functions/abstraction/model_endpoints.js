@@ -104,20 +104,50 @@ function detailsEndPoint(model){
 
 function updateEndPoint(model){
 	async function endPointToReturn (req,res){
-
 		let document_id = req.params.id;
+		let modelName = model.$__collection.modelName;
+		await model.findByIdAndUpdate(document_id, req.body, 
+			{"useFindAndModify":false, "new":true,
+			"runValidators": true},function (err, doc) 
+			{
+				if (err) 
+				{
+					res.statusCode = 400;
+					res.send(mongoose_errors_to_json(err));
+				}
+				else
+				{
+					if (doc)
+					{res.send(doc);}
+					else
+					{
+						res.statusCode = 404;
+						res.send({"_id":"there is no "+modelName+
+							" with this _id"});
+					}			
+				}
+			});
+	}
+
+/*		let document_id = req.params.id;
 		let modelName = model.$__collection.modelName;
 		doc = await validateObjectIdExists(model, document_id);
 		if (doc){
-			await doc.overwtirte(req.body);
-			await doc.save();
-			res.send(doc);
+			
+			await doc.update(req.body,{"runValidators": true})
+			.then(()=>{res.send(doc);})
+			.catch((err)=>{
+				res.statusCode = 422;
+				res.send(mongoose_errors_to_json(err));
+			});
+			//await doc.save();
+			
 		}
 		else{
 			res.statusCode = 404;
 			res.send({"_id":"there is no "+modelName+" with this _id"});
 		}
-	}
+	}*/
 		/*model.findByIdAndUpdate(doc_id, req.body, 
 			{"useFindAndModify":false, "new":true,
 			"runValidators": true},function (err, doc) 
