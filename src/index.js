@@ -10,7 +10,7 @@ const {listEndPoint, createEndPoint,
 	require("./functions/abstraction/model_endpoints.js");
 
 /*Importing Models*/
-const {Product} = require("./schemas/_db.js");
+const {Product, Order} = require("./schemas/_db.js");
 
 
 const app = express();

@@ -13,8 +13,8 @@ const orderSchema = new mongoose.Schema(
 		"required":true
 	},
 	cost: {
-		"type":number
+		"type":Number
 	},
 });
 
-module.exports={productSchema};
+module.exports={orderSchema};

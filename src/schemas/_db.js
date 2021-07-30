@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const {productSchema} = require("./product.js");
+const {orderSchema} = require("./order.js");
 
 
 mongoose.connect(
@@ -17,9 +18,10 @@ db.once('open', function() {
 
 
 const Product = mongoose.model('Product', productSchema);
+const Order = mongoose.model('Order', orderSchema);
 
 
 
 
 
-module.exports={Product};
+module.exports={Product, Order};
