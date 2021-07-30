@@ -4,57 +4,72 @@ const {Product} = require("./product.js");
 
 const {validateObjectIdExists} =  require("../functions/validators.js");
 
+
+
 function foreingKeyValidator(model){
 	return async function id_validator (val) {
-	  	console.log(val);
+	  	//console.log(val);
 		doc = await validateObjectIdExists(model, val);
-		if (doc) {console.log(doc);
-				return true;}
-		else{console.log(false);
-				return false;}
-		/*await validateObjectIdExists(model, val).
-		then((doc)=>{
-			if (doc) {
-				console.log(doc);
-				return true;
-			}else{
-				console.log(false);
-				return false;
-			}
-		});*/
+		if (doc) 
+		{
+			//console.log(doc);
+			return true;
+		}
+		else
+		{
+			//console.log(false);
+			return false;
+		}
 	}
 }
 
 
-async function myFunction(val){
-	async function myInnerFunction(){
-		let x = await 7;
-		return false;
+
+
+
+function foreignKeySchemaType(model, required=true, immutable=true)
+{	console.log(model);
+	/*for (var name in model.models[0].name) {
+  		console.log(name, model[name]);
+	}*/
+	//console.log();
+	let modelName = model.$__collection.modelName;
+	return {
+		"type":mongoose.ObjectId,
+		"required":required,
+		"immutable":immutable,
+		"validate": [foreingKeyValidator(model),
+		"There is no " + modelName + " with this id"]
 	}
-	return await myInnerFunction;
 }
 
 
 
-function myFunction2 (v) {
-    return async function (val) {
-       return await false;
-    }
-}
 
 
 
-//console.log(await foreingKeyValidator(Product)("60fa57b72d712b2ec8d192ef"));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 const orderSchema = new mongoose.Schema(
 {
-	product_id:{
-		"type":mongoose.ObjectId,
-		"required":true,
-		"immutable":true,
-		"validate": foreingKeyValidator(Product)
-	}, 
+	product_id:foreignKeySchemaType(Product), 
 	amount: { 
 		type: Number,
 		min: [1, "No product should have a price less than .01"], 
