@@ -2,9 +2,10 @@ const mongoose = require('mongoose');
 
 const orderSchema = new mongoose.Schema(
 {
-	product:{
+	product_id:{
 		"type":mongoose.ObjectId,
-		"required":true
+		"required":true,
+		"immutable":true
 	}, 
 	amount: { 
 		type: Number,
@@ -13,7 +14,8 @@ const orderSchema = new mongoose.Schema(
 		"required":true
 	},
 	cost: {
-		"type":Number
+		"type":Number,
+		"immutable":true
 	},
 });
 
