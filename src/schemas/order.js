@@ -2,10 +2,20 @@ const mongoose = require('mongoose');
 
 const {Product} = require("./product.js");
 
-function product_id_validator (val) {
-  console.log(val);
+const {validateObjectIdExists} =  require("../functions/validators.js");
 
-  return true;
+async function product_id_validator (val) {
+  	console.log(val);
+	validateObjectIdExists(Product, val).
+	then((doc)=>{
+		if (doc) {
+			//console.log(doc);
+			return true;
+		}else{
+			//console.log(false);
+			return false;
+		}
+	});
 }
 
 

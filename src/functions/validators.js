@@ -14,12 +14,18 @@ Output:
 
 function validateObjectIdExists(model, id)
 {
-	model.findById(id, function (err, doc) {
+	//console.log("I am validateObjectIdExists");
+	return model.findById(id, function (err, doc) {
 		if (err) {return false;}
 		else
 		{
+			//console.log("There are no errors in validateObjectIdExists");
 			if (doc)
-			{return doc;}
+			{
+				//console.log(doc);
+				return doc;
+				//console.log("doc is returned");
+			}
 			else{false;}	
 		}
 	});
