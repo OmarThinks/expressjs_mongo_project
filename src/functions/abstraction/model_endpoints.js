@@ -74,12 +74,23 @@ function detailsEndPoint(model){
 	return endPointToReturn;
 }
 
-function updateEndPoint(model, model_name){
-	function endPointToReturn (req,res){
+function updateEndPoint(model){
+	async function endPointToReturn (req,res){
 
 		let doc_id = req.params.id;
-
-		model.findByIdAndUpdate(doc_id, req.body, 
+		let modelName = model.$__collection.modelName;
+		doc = validateObjectIdExists(model, document_id);
+		if (doc){
+			doc.overwtirte(req.body);
+			await doc.save();
+			res.send(doc);
+		}
+		else{
+			res.statusCode = 404;
+			res.send({"_id":"there is no "+modelName+" with this _id"});
+		}
+	}
+		/*model.findByIdAndUpdate(doc_id, req.body, 
 			{"useFindAndModify":false, "new":true,
 			"runValidators": true},function (err, doc) 
 		{
@@ -100,15 +111,27 @@ function updateEndPoint(model, model_name){
 				}			
 			}
 		});
-	}
+	}*/
 	return endPointToReturn;
 }
 
-function deleteEndPoint(model, model_name){
-	function endPointToReturn (req,res){
+function deleteEndPoint(model){
+	async function endPointToReturn (req,res){
+		let doc_id = req.params.id;
+		let modelName = model.$__collection.modelName;
+		doc = validateObjectIdExists(model, document_id);
+		if (doc){
+			doc.remove();
+			await doc.remove();
+			res.send({"success":true,
+				"message":model_name +" deleted successfully"});
+		}
+		else{
+			res.statusCode = 404;
+			res.send({"_id":"there is no "+modelName+" with this _id"});
+		}
 
-
-	let doc_id = req.params.id;
+	/*let doc_id = req.params.id;
 	//console.log("I search this id");
 
 	model.findByIdAndDelete(doc_id, function (err, doc) {
@@ -131,7 +154,7 @@ function deleteEndPoint(model, model_name){
 					" with this _id"});
 			}			
 		}
-	});
+	});*/
 	}
 	return endPointToReturn;
 }
