@@ -3,45 +3,9 @@ const mongoose = require('mongoose');
 const {Product} = require("./product.js");
 
 const {validateObjectIdExists} =  require("../functions/validators.js");
+const {foreignKeySchemaType} =  require("../functions/schemaTypes.js");
 
 
-
-function foreingKeyValidator(model){
-	return async function id_validator (val) {
-	  	//console.log(val);
-		doc = await validateObjectIdExists(model, val);
-		if (doc) 
-		{
-			//console.log(doc);
-			return true;
-		}
-		else
-		{
-			//console.log(false);
-			return false;
-		}
-	}
-}
-
-
-
-
-
-function foreignKeySchemaType(model, required=true, immutable=true)
-{	console.log(model);
-	/*for (var name in model.models[0].name) {
-  		console.log(name, model[name]);
-	}*/
-	//console.log();
-	let modelName = model.$__collection.modelName;
-	return {
-		"type":mongoose.ObjectId,
-		"required":required,
-		"immutable":immutable,
-		"validate": [foreingKeyValidator(model),
-		"There is no " + modelName + " with this id"]
-	}
-}
 
 
 

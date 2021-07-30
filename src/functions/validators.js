@@ -33,4 +33,25 @@ function validateObjectIdExists(model, id)
 
 
 
-module.exports={"validateObjectIdExists":validateObjectIdExists};
+
+function foreingKeyValidator(model){
+	return async function id_validator (val) {
+	  	//console.log(val);
+		doc = await validateObjectIdExists(model, val);
+		if (doc) 
+		{
+			//console.log(doc);
+			return true;
+		}
+		else
+		{
+			//console.log(false);
+			return false;
+		}
+	}
+}
+
+
+
+module.exports={"validateObjectIdExists":validateObjectIdExists,
+	"foreingKeyValidator":foreingKeyValidator};
