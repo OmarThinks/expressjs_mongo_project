@@ -1,8 +1,10 @@
 const mongoose = require('mongoose');
 
+const {Product} = require("./product.js");
 
 function product_id_validator (val) {
   console.log(val);
+
   return true;
 }
 
@@ -31,4 +33,11 @@ const orderSchema = new mongoose.Schema(
 	},
 });
 
-module.exports={orderSchema};
+
+const Order = mongoose.model('Order', orderSchema);
+
+
+
+
+
+module.exports={Order};
