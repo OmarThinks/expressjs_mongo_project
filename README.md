@@ -6,6 +6,7 @@ A RESTful API using MongoDB and ExpressJS.
 
 1. [Mongoose](https://www.npmjs.com/package/mongoose)
 2. [ExpressJS](https://www.npmjs.com/package/express)
+2. [Modemon](https://www.npmjs.com/package/nodemon)
 
 
 
