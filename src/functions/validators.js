@@ -15,11 +15,11 @@ Output:
 async function validateObjectIdExists(model, id)
 {
 	console.log("I am validateObjectIdExists");
-	
-	try{
-
-	return await model.findById(id, function (err, doc) {
-		if (err) {return false;}
+	return await model.findById(id, async function (err, doc) 
+	{
+		if (err) {
+			console.log("there is an error");
+			return false;}
 		else
 		{
 			console.log("There are no errors in validateObjectIdExists");
@@ -29,12 +29,35 @@ async function validateObjectIdExists(model, id)
 				return doc;
 				console.log("doc is returned");
 			}
-			else{false;}	
+			else{return false;}	
 		}
-	});
-	}
-	catch{return false;}
+	})
+	.catch((err)=>{return false;});
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

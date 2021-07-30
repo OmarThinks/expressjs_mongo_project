@@ -105,7 +105,7 @@ function detailsEndPoint(model){
 function updateEndPoint(model){
 	async function endPointToReturn (req,res){
 
-		let doc_id = req.params.id;
+		let document_id = req.params.id;
 		let modelName = model.$__collection.modelName;
 		doc = await validateObjectIdExists(model, document_id);
 		if (doc){
@@ -145,13 +145,13 @@ function updateEndPoint(model){
 
 function deleteEndPoint(model){
 	async function endPointToReturn (req,res){
-		let doc_id = req.params.id;
+		let document_id = req.params.id;
 		let modelName = model.$__collection.modelName;
 		doc = await validateObjectIdExists(model, document_id);
 		if (doc){
 			await doc.remove();
 			res.send({"success":true,
-				"message":model_name +" deleted successfully"});
+				"message":modelName +" deleted successfully"});
 		}
 		else{
 			res.statusCode = 404;
