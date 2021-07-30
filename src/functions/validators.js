@@ -12,23 +12,28 @@ Output:
 */
 
 
-function validateObjectIdExists(model, id)
+async function validateObjectIdExists(model, id)
 {
-	//console.log("I am validateObjectIdExists");
-	return model.findById(id, function (err, doc) {
+	console.log("I am validateObjectIdExists");
+	
+	try{
+
+	return await model.findById(id, function (err, doc) {
 		if (err) {return false;}
 		else
 		{
-			//console.log("There are no errors in validateObjectIdExists");
+			console.log("There are no errors in validateObjectIdExists");
 			if (doc)
 			{
-				//console.log(doc);
+				console.log(doc);
 				return doc;
-				//console.log("doc is returned");
+				console.log("doc is returned");
 			}
 			else{false;}	
 		}
 	});
+	}
+	catch{return false;}
 }
 
 

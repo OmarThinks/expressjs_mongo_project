@@ -39,11 +39,11 @@ function listEndPoint(model)
 
 
 function createEndPoint(model){
-	function endPointToReturn(req,res)
+	async function endPointToReturn(req,res)
 	{
 		const new_doc = new model(req.body);
 		
-		new_doc.save(function (err, new_doc) {
+		await new_doc.save(function (err, new_doc) {
 		if (err) {
 			res.statusCode = 400;
 			res.send(mongoose_errors_to_json(err));
@@ -60,12 +60,40 @@ function createEndPoint(model){
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function detailsEndPoint(model){
-	function endPointToReturn (req,res){
+	async function endPointToReturn (req,res){
 		let document_id = req.params.id;
+		//console.log(document_id);
 		let modelName = model.$__collection.modelName;
-		doc = validateObjectIdExists(model, document_id);
-		if (doc){res.send(doc);}
+		//console.log(modelName);
+		let doc = await validateObjectIdExists(model, document_id);
+		//console.log(doc);
+		//console.log(doc.mongooseCollection.collection);
+		//console.log(doc.schema.paths);
+		if (doc){
+			console.log("I found it");
+			res.send(doc);}
 		else{
 			res.statusCode = 404;
 			res.send({"_id":"there is no "+modelName+" with this _id"});
@@ -79,9 +107,9 @@ function updateEndPoint(model){
 
 		let doc_id = req.params.id;
 		let modelName = model.$__collection.modelName;
-		doc = validateObjectIdExists(model, document_id);
+		doc = await validateObjectIdExists(model, document_id);
 		if (doc){
-			doc.overwtirte(req.body);
+			await doc.overwtirte(req.body);
 			await doc.save();
 			res.send(doc);
 		}
@@ -119,9 +147,8 @@ function deleteEndPoint(model){
 	async function endPointToReturn (req,res){
 		let doc_id = req.params.id;
 		let modelName = model.$__collection.modelName;
-		doc = validateObjectIdExists(model, document_id);
+		doc = await validateObjectIdExists(model, document_id);
 		if (doc){
-			doc.remove();
 			await doc.remove();
 			res.send({"success":true,
 				"message":model_name +" deleted successfully"});
