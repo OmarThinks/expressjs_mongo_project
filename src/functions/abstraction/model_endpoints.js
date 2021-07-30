@@ -67,7 +67,7 @@ function detailsEndPoint(model){
 		//console.log(doc.mongooseCollection.collection);
 		//console.log(doc.schema.paths);
 		if (doc){
-			console.log("I found it");
+			//console.log("I found it");
 			res.send(doc);}
 		else{
 			res.statusCode = 404;
