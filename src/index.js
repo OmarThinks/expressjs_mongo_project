@@ -34,6 +34,16 @@ app.delete('/products/:id', deleteEndPoint(Product,"product"));
 
 
 
+/*Order Endpoints*/
+app.get('/orders', listEndPoint(Order));
+app.post('/orders', createEndPoint(Order));
+app.get('/orders/:id', detailsEndPoint(Order, "order"));
+app.put('/orders/:id', updateEndPoint(Order, "order"));
+app.delete('/orders/:id', deleteEndPoint(Order,"order"));
+
+
+
+
 
  
 app.listen(3000)
