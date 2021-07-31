@@ -36,7 +36,7 @@ const orderSchema = new mongoose.Schema(
 	product_id:foreignKeySchemaType(Product), 
 	amount: { 
 		type: Number,
-		min: [1, "No product should have a price less than .01"], 
+		min: [.01, "No product should have a price less than .01"], 
 		max: 1000000,
 		"required":true
 	},
