@@ -39,15 +39,22 @@ function schemaDeleteCascades(schema, childModels, fieldNames)
 
 
 
+/*
+Inputs:
+- schema:
+	- Example: productSchema
+- fieldName:
+	- Example: "product_id"
+*/
 
 
-
+/*https://github.com/Automattic/mongoose/issues/9152*/
 function schemaDeleteCascades(schema, fieldName)
 {
 	schema.pre('deleteOne', { document: false, query: true }, 
 		async function() {
 	  	const doc = await this.model.findOne(this.getFilter());
-	  await UserLink.deleteMany({ fieldName: doc._id });
+		await UserLink.deleteMany({ fieldName: doc._id });
 	});
 	return schema;
 }

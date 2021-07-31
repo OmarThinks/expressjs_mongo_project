@@ -1,6 +1,14 @@
 const mongoose = require('mongoose');
 
-const productSchema = new mongoose.Schema(
+
+/*
+const {schemaDeleteCascades} = require(
+	"../functions/schemaGenerator.js");
+*/
+
+
+
+var productSchema = new mongoose.Schema(
 {
 	name:{
 		"type":String,
@@ -26,17 +34,14 @@ const productSchema = new mongoose.Schema(
 
 
 
+/*
 
-
-
-
-
-
-
-
-
-
-
+productSchema.pre('deleteOne', 
+	{ document: false, query: true }, async function() {
+  const doc = await this.model.findOne(this.getFilter());
+  await UserLink.deleteMany({ user: doc._id });
+});
+*/
 
 
 
