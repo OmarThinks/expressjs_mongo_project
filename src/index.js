@@ -10,7 +10,8 @@ const {listEndPoint, createEndPoint,
 	require("./functions/abstraction/model_endpoints.js");
 
 /*Importing Models*/
-const {Product, Order} = require("./schemas/_db.js");
+// const {Product, Order} = require("./schemas/_db.js");
+const {Product } = require("./schemas/_db.js");
 
 
 const app = express();
@@ -19,7 +20,7 @@ app.use(express.json());
 /*Ping*/
 
 app.get('/', function (req, res) {
-  res.send('Hello World')
+  res.send({"Ping":"Pong"})
 });
 
 
@@ -34,13 +35,13 @@ app.delete('/products/:id', deleteEndPoint(Product,"product"));
 
 
 
-/*Order Endpoints*/
+/*Order Endpoints
 app.get('/orders', listEndPoint(Order));
 app.post('/orders', createEndPoint(Order));
 app.get('/orders/:id', detailsEndPoint(Order, "order"));
 app.put('/orders/:id', updateEndPoint(Order, "order"));
 app.delete('/orders/:id', deleteEndPoint(Order,"order"));
-
+*/
 
 
 

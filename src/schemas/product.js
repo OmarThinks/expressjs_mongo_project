@@ -8,6 +8,28 @@ const {schemaDeleteCascades} = require(
 
 
 
+
+
+
+const orderSchema = new mongoose.Schema(
+{
+	//product_id:foreignKeySchemaType(Product), 
+	amount: { 
+		type: Number,
+		min: [.01, "No product should have a price less than .01"], 
+		max: 1000000,
+		"required":true
+	},
+	cost: {
+		"type":Number,
+		"immutable":true
+	},
+});
+
+
+
+
+
 var productSchema = new mongoose.Schema(
 {
 	name:{
@@ -28,6 +50,10 @@ var productSchema = new mongoose.Schema(
 		"maxLength":1000,
 		"required":true
 	},
+	ordersname:{
+		"type":orderSchema,
+		"required":false
+	}, 
 });
 
 
