@@ -50,7 +50,7 @@ var productSchema = new mongoose.Schema(
 		"maxLength":1000,
 		"required":true
 	},
-	ordersname:{
+	orders:{
 		"type":orderSchema,
 		"required":false
 	}, 
