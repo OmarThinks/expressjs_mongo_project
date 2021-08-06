@@ -6,7 +6,7 @@
 	},
 	"item": [
 		{
-			"name": "Ping",
+			"name": "0) Ping",
 			"item": [
 				{
 					"name": "http://127.0.0.1:3000/",
@@ -19,7 +19,7 @@
 									"  pm.response.to.have.status(200);\r",
 									"});\r",
 									"const responseJson = pm.response.json();\r",
-									"pm.test(\"Success is True\", () => {\r",
+									"pm.test(\"Ping\", () => {\r",
 									"  pm.expect(responseJson.Ping).to.eql(\"Pong\");\r",
 									"});"
 								],
@@ -46,6 +46,62 @@
 						}
 					},
 					"response": []
+				}
+			]
+		},
+		{
+			"name": "1) Products",
+			"item": [
+				{
+					"name": "1-1) Get",
+					"item": [
+						{
+							"name": "http://127.0.0.1:3000/products",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"  pm.response.to.have.status(200);\r",
+											"});\r",
+											"const responseJson = pm.response.json();\r",
+											"pm.test(\"output as expected\", () => {\r",
+											"for (let index in responseJson) {\r",
+											"  let product = responseJson[index];\r",
+											"  //console.log(product);\r",
+											"        pm.expect(typeof(product[\"_id\"])).to.eql(typeof(\"str\"));\r",
+											"        pm.expect(typeof(product[\"name\"])).to.eql(typeof(\"txt\"));\r",
+											"        pm.expect(typeof(product[\"description\"])).to.eql(typeof(\"str\"));\r",
+											"        pm.expect(typeof(product[\"__v\"])).to.eql(typeof(1));\r",
+											"}\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://127.0.0.1:3000/products",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "3000",
+									"path": [
+										"products"
+									]
+								}
+							},
+							"response": []
+						}
+					]
 				}
 			]
 		}
