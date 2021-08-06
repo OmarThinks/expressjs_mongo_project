@@ -22,7 +22,4 @@ db.once('open', function() {
 
 
 
-// module.exports={Product, Order};
-module.exports={Product};
-
-
+module.exports={Product, Order};

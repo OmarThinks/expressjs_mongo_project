@@ -8,10 +8,9 @@ const {foreignKeySchemaType} =  require("../functions/schemaTypes.js");
 
 
 
-
 const orderSchema = new mongoose.Schema(
 {
-	// product_id:foreignKeySchemaType(Product), 
+	product_id:foreignKeySchemaType(Product), 
 	amount: { 
 		type: Number,
 		min: [.01, "No product should have a price less than .01"], 
